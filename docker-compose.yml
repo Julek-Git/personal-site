@@ -1,0 +1,23 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_HOST: localhost
+        VITE_API_PORT: 2537
+    ports:
+      - "80:80"
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "2537:2537"
+    volumes:
+      - cache:/app/cache
+    environment:
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      FRONTEND_URL: ${FRONTEND_URL}
+
+volumes:
+  cache:
+    driver: local
